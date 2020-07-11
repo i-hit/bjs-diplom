@@ -1,13 +1,5 @@
 "use strict";
 
-const testUser = [
-  { login: "oleg@demo.ru", password: "demo" },
-  { login: "ivan@demo.ru", password: "demo" },
-  { login: "petr@demo.ru", password: "demo" },
-  { login: "galina@demo.ru", password: "demo" },
-  { login: "vladimir@demo.ru", password: "demo" },
-];
-
 const userForm = new UserForm();
 
 userForm.loginFormCallback = () => {
@@ -21,11 +13,11 @@ userForm.loginFormCallback = () => {
 };
 
 userForm.registerFormCallback = () => {
-  ApiConnector.login(userForm.getData(userForm.loginForm), (response) => {
+  ApiConnector.register(userForm.getData(userForm.registerForm), (response) => {
     if (response.success) {
       location.reload();
       return;
     }
-    userForm.setLoginErrorMessage(response.data);
+    userForm.setRegisterErrorMessage(response.data);
   });
 };
