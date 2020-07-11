@@ -1,6 +1,5 @@
 "use strict";
 
-
 // logout
 const logoutButton = new LogoutButton();
 
@@ -41,12 +40,15 @@ const moneyManager = new MoneyManager();
 moneyManager.addMoneyCallback = (data) => {
   ApiConnector.addMoney(data, (response) => {
     if (response.success) {
-      moneyManager.setMessage(0, `Баланс пополнен на ${data.amount} ${data.currency}`);
+      moneyManager.setMessage(
+        0,
+        `Баланс пополнен на ${data.amount} ${data.currency}`
+      );
       ProfileWidget.showProfile(response.data);
       return;
     }
-    
-    moneyManager.setMessage(1, response.data)
+
+    moneyManager.setMessage(1, response.data);
   });
 };
 
@@ -57,8 +59,8 @@ moneyManager.conversionMoneyCallback = (data) => {
       ProfileWidget.showProfile(response.data);
       return;
     }
-    
-    moneyManager.setMessage(1, response.data)
+
+    moneyManager.setMessage(1, response.data);
   });
 };
 
@@ -66,11 +68,14 @@ moneyManager.sendMoneyCallback = (data) => {
   ApiConnector.transferMoney(data, (response) => {
     if (response.success) {
       ProfileWidget.showProfile(response.data);
-      moneyManager.setMessage(0, `Вы успешно перевели ${data.amount} ${data.currency}`);
+      moneyManager.setMessage(
+        0,
+        `Вы успешно перевели ${data.amount} ${data.currency}`
+      );
       return;
     }
-    
-    moneyManager.setMessage(1, response.data)
+
+    moneyManager.setMessage(1, response.data);
   });
 };
 
@@ -84,13 +89,13 @@ function updateFavorit() {
       favoritesWidget.fillTable(response.data);
       moneyManager.updateUsersList(response.data);
     }
-  })
-};
+  });
+}
 
 updateFavorit();
 
 favoritesWidget.addUserCallback = (data) => {
-  ApiConnector.addUserToFavorites(data, response => {
+  ApiConnector.addUserToFavorites(data, (response) => {
     if (response.success) {
       favoritesWidget.clearTable();
       favoritesWidget.fillTable(response.data);
@@ -98,20 +103,18 @@ favoritesWidget.addUserCallback = (data) => {
       favoritesWidget.setMessage(0, `Пользователь ${data.name} добавлен`);
       return;
     }
-    
+
     favoritesWidget.setMessage(1, response.data);
-  })
-}
+  });
+};
 
 favoritesWidget.removeUserCallback = (data) => {
-  ApiConnector.removeUserFromFavorites(data, response => {
+  ApiConnector.removeUserFromFavorites(data, (response) => {
     if (response.success) {
       favoritesWidget.clearTable();
       favoritesWidget.fillTable(response.data);
       moneyManager.updateUsersList(response.data);
       favoritesWidget.setMessage(0, "Пользователь удален");
     }
-    
-  })
-}
-
+  });
+};
