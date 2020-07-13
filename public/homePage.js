@@ -41,26 +41,26 @@ moneyManager.addMoneyCallback = (data) => {
   ApiConnector.addMoney(data, (response) => {
     if (response.success) {
       moneyManager.setMessage(
-        0,
+        false,
         `Баланс пополнен на ${data.amount} ${data.currency}`
       );
       ProfileWidget.showProfile(response.data);
       return;
     }
 
-    moneyManager.setMessage(1, response.data);
+    moneyManager.setMessage(true, response.data);
   });
 };
 
 moneyManager.conversionMoneyCallback = (data) => {
   ApiConnector.convertMoney(data, (response) => {
     if (response.success) {
-      moneyManager.setMessage(0, "Конвертация выполнена");
+      moneyManager.setMessage(false, "Конвертация выполнена");
       ProfileWidget.showProfile(response.data);
       return;
     }
 
-    moneyManager.setMessage(1, response.data);
+    moneyManager.setMessage(true, response.data);
   });
 };
 
@@ -69,13 +69,13 @@ moneyManager.sendMoneyCallback = (data) => {
     if (response.success) {
       ProfileWidget.showProfile(response.data);
       moneyManager.setMessage(
-        0,
+        false,
         `Вы успешно перевели ${data.amount} ${data.currency}`
       );
       return;
     }
 
-    moneyManager.setMessage(1, response.data);
+    moneyManager.setMessage(true, response.data);
   });
 };
 
@@ -100,11 +100,11 @@ favoritesWidget.addUserCallback = (data) => {
       favoritesWidget.clearTable();
       favoritesWidget.fillTable(response.data);
       moneyManager.updateUsersList(response.data);
-      favoritesWidget.setMessage(0, `Пользователь ${data.name} добавлен`);
+      favoritesWidget.setMessage(false, `Пользователь ${data.name} добавлен`);
       return;
     }
 
-    favoritesWidget.setMessage(1, response.data);
+    favoritesWidget.setMessage(true, response.data);
   });
 };
 
@@ -114,7 +114,7 @@ favoritesWidget.removeUserCallback = (data) => {
       favoritesWidget.clearTable();
       favoritesWidget.fillTable(response.data);
       moneyManager.updateUsersList(response.data);
-      favoritesWidget.setMessage(0, "Пользователь удален");
+      favoritesWidget.setMessage(false, "Пользователь удален");
     }
   });
 };
